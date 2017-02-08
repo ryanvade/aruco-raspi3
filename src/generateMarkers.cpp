@@ -7,7 +7,6 @@
 using namespace cv;
 
 int main(int argc, char const *argv[]) {
-  int cameraID = -1; // -1 is default camera
   int dictionaryId = 0;
   int markerSize = 200; // # Side Pixels
   size_t markerCount = 10;
