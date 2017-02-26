@@ -6,10 +6,10 @@
 #include <opencv2/videoio.hpp>
 #include <string>
 
+#define DEBUG 1
 typedef int MODE;
 enum MODES { CALIBRATING = 0, DETECTING = 1, CAPTURING = 2, CALIBRATED = 3 };
-
-#define DEBUG true;
+const cv::Scalar RED(0, 0, 255), GREEN(0, 255, 0);
 
 class CameraCallibrator {
 public:
@@ -21,14 +21,14 @@ public:
 
 private:
   int cameraId;
-  int delay = 5;
+  int delay = 100;
   size_t numberFrames = 10;
   const char ESC_KEY = 27;
   std::string outputFile = "results";
   bool flipVertical = false;
   cv::VideoCapture cameraInput;
   cv::Size chessBoardSize;
-  int squareSize;
+  int squareSize = 50;
   int chessBoardFlags = cv::CALIB_CB_ADAPTIVE_THRESH |
                         cv::CALIB_CB_NORMALIZE_IMAGE | cv::CALIB_CB_FAST_CHECK;
 

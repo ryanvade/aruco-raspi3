@@ -18,13 +18,13 @@ CameraCallibrator::CameraCallibrator(int cameraId, bool flipVertical) {
   this->cameraId = (cameraId >= -1) ? cameraId : -1;
   this->flipVertical = flipVertical;
   this->chessBoardSize.height = 4;
-  this->chessBoardSize.width = 4;
+  this->chessBoardSize.width = 9;
 }
 
 CameraCallibrator::CameraCallibrator() {
   this->cameraId = -1;
   this->chessBoardSize.height = 4;
-  this->chessBoardSize.width = 4;
+  this->chessBoardSize.width = 9;
 }
 
 bool CameraCallibrator::callibrate() {
@@ -74,6 +74,41 @@ bool CameraCallibrator::callibrate() {
         imagePoints.push_back(pointBuffer);
         prevTimestamp = clock();
       }
+
+      cv::drawChessboardCorners(view, this->chessBoardSize,
+                                cv::Mat(pointBuffer), found);
+    }
+    std::string msg =
+        (mode == CAPTURING)
+            ? "100/100"
+            : (mode == CALIBRATED) ? "Calibrated" : "Press 'g' to start";
+
+    int baseline = 0;
+    cv::Size textSize = cv::getTextSize(msg, 1, 1, 1, &baseline);
+    cv::Point textOrigin(view.cols - 2 * textSize.width - 10,
+                         view.rows - 2 * baseline - 10);
+    if (mode == CAPTURING) {
+      msg = cv::format("%d/%d", (int)imagePoints.size(), this->numberFrames);
+    }
+
+    cv::putText(view, msg, textOrigin, 1, 1, mode == CALIBRATED ? GREEN : RED);
+    cv::Mat temp = view.clone();
+
+    if (mode == CALIBRATED)
+      cv::undistort(temp, view, cameraMatrix, distortionCoeffs);
+    cv::namedWindow("Image View", cv::WINDOW_AUTOSIZE);
+    cv::imshow("Image View", view);
+    char key = (char)cv::waitKey(500);
+
+    if (key == ESC_KEY)
+      break;
+    if (key == 'g') {
+      mode = CAPTURING;
+      imagePoints.clear();
+    }
+
+    if (DEBUG) {
+      std::cout << "MODE: " << mode << " found: " << found << std::endl;
     }
   }
   return (mode == CALIBRATED) ? true : false;
@@ -133,6 +168,7 @@ bool CameraCallibrator::runCalibration(
     this->saveResultsToFile(resolution, cameraMatrix, distortionCoeffs,
                             rotationVectors, translationVectors, reprojErrs,
                             imagePoints, totalAverageError);
+  return calibrationSuccessful;
 }
 
 double CameraCallibrator::getTotalAverageError(
