@@ -4,3 +4,5 @@ marker*.png
 findChessBoard
 *.out
 *.gch
+calibrateCamera
+out.txt

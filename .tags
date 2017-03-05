@@ -365,14 +365,17 @@ STRINGIFY_HELPER	build/CMakeFiles/3.7.2/CompilerIdC/CMakeCCompilerId.c	296;"	d	f
 STRINGIFY_HELPER	build/CMakeFiles/3.7.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	283;"	d	file:
 SUFFIXES	build/Makefile	/^SUFFIXES =$/;"	m
 arucoSquareSize	src/CameraCalibration/CameraCalibrator.h	/^  float arucoSquareSize = 0.0;          \/\/ Meters$/;"	m	class:CameraCalibrator
-calculateChessBoardCornersFromImages	src/CameraCalibration/CameraCalibrator.cpp	/^void CameraCalibrator::calculateChessBoardCornersFromImages() {$/;"	f	class:CameraCalibrator
-calculateChessBoardPosition	src/CameraCalibration/CameraCalibrator.cpp	/^void CameraCalibrator::calculateChessBoardPosition() {$/;"	f	class:CameraCalibrator
+calculateChessBoardCornersFromImages	src/CameraCalibration/CameraCalibrator.cpp	/^void CameraCalibrator::calculateChessBoardCornersFromImages($/;"	f	class:CameraCalibrator
+calculateChessBoardPosition	src/CameraCalibration/CameraCalibrator.cpp	/^void CameraCalibrator::calculateChessBoardPosition(vector<Point3f> &corners) {$/;"	f	class:CameraCalibrator
+calibrate	src/CameraCalibration/CameraCalibrator.cpp	/^void CameraCalibrator::calibrate() {$/;"	f	class:CameraCalibrator
 cameraId	src/CameraCalibration/CameraCalibrator.h	/^  int cameraId;$/;"	m	class:CameraCalibrator
+cameraMatrix	src/CameraCalibration/CameraCalibrator.h	/^  Mat cameraMatrix = Mat::eye(3, 3, CV_64F);$/;"	m	class:CameraCalibrator
 chessBoardCorners	src/CameraCalibration/CameraCalibrator.h	/^  vector<Point3f> chessBoardCorners;$/;"	m	class:CameraCalibrator
 chessBoardDimensions	src/CameraCalibration/CameraCalibrator.h	/^  Size chessBoardDimensions = Size(6, 9);$/;"	m	class:CameraCalibrator
 chessBoardFlags	src/CameraCalibration/CameraCalibrator.h	/^  int chessBoardFlags = cv::CALIB_CB_ADAPTIVE_THRESH |$/;"	m	class:CameraCalibrator
 chessBoardSquareSize	src/CameraCalibration/CameraCalibrator.h	/^  float chessBoardSquareSize = 0.0235f; \/\/ Meters$/;"	m	class:CameraCalibrator
 const	build/CMakeFiles/3.7.2/CompilerIdC/CMakeCCompilerId.c	10;"	d	file:
+distanceCoefficients	src/CameraCalibration/CameraCalibrator.h	/^  Mat distanceCoefficients;$/;"	m	class:CameraCalibrator
 features	build/CMakeFiles/feature_tests.c	/^  const char features[] = {"\\n"$/;"	v
 features	build/CMakeFiles/feature_tests.cxx	/^  const char features[] = {"\\n"$/;"	v
 flipVertical	src/CameraCalibration/CameraCalibrator.h	/^  bool flipVertical = false;$/;"	m	class:CameraCalibrator
@@ -405,6 +408,9 @@ main	src/CameraCalibration/calibrateCamera.cpp	/^int main(int argc, char const *
 main	src/FindArucoMarkers/detectMarker.cpp	/^int main(int argc, char const *argv[]) {$/;"	f
 main	src/FindArucoMarkers/generateMarkers.cpp	/^int main(int argc, char const *argv[]) {$/;"	f
 main	src/Util/findChessBoard.cpp	/^int main(int argc, char const *argv[]) {$/;"	f
+outFileName	src/CameraCalibration/CameraCalibrator.h	/^  string outFileName = "out.txt";$/;"	m	class:CameraCalibrator
 qnxnto	build/CMakeFiles/3.7.2/CompilerIdC/CMakeCCompilerId.c	/^char const* qnxnto = "INFO" ":" "qnxnto[]";$/;"	v
 qnxnto	build/CMakeFiles/3.7.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const* qnxnto = "INFO" ":" "qnxnto[]";$/;"	v
+res	src/Util/getWaitKeyValue.py	/^res = cv2.waitKey(0)$/;"	v
+saveCalibration	src/CameraCalibration/CameraCalibrator.cpp	/^bool CameraCalibrator::saveCalibration() {$/;"	f	class:CameraCalibrator
 volatile	build/CMakeFiles/3.7.2/CompilerIdC/CMakeCCompilerId.c	11;"	d	file:

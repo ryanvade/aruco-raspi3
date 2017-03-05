@@ -1,5 +1,6 @@
 #include <cstdio>
 #include <ctime>
+#include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -32,13 +33,12 @@ CameraCalibrator::CameraCalibrator() {
  * Determines the chess board Position
  *
  */
-void CameraCalibrator::calculateChessBoardPosition() {
+void CameraCalibrator::calculateChessBoardPosition(vector<Point3f> &corners) {
   for (size_t i = 0; i < (size_t)this->chessBoardDimensions.height; i++) {
     for (size_t j = 0; j < (size_t)this->chessBoardDimensions.width; j++) {
       // X = j * square size, Y = i * square size, Z = 0.0
-      this->chessBoardCorners.push_back(Point3f(j * this->chessBoardSquareSize,
-                                                i * this->chessBoardSquareSize,
-                                                0.0f));
+      corners.push_back(Point3f(j * this->chessBoardSquareSize,
+                                i * this->chessBoardSquareSize, 0.0f));
     }
   }
 }
@@ -49,20 +49,21 @@ void CameraCalibrator::calculateChessBoardPosition() {
  * Determines all the chess board corner positions
  *
  */
-void CameraCalibrator::calculateChessBoardCornersFromImages() {
-  for (vector<Mat>::iterator iter = this->images.begin(); iter != images.end();
-       iter++) {
+void CameraCalibrator::calculateChessBoardCornersFromImages(
+    vector<vector<Point2f>> &foundCorners) {
+  for (vector<Mat>::iterator iter = this->images.begin();
+       iter != this->images.end(); iter++) {
     vector<Point2f> pointBuf;
     bool chessBoardFound = findChessboardCorners(
         *iter, this->chessBoardDimensions, pointBuf, this->chessBoardFlags);
     if (chessBoardFound) {
-      this->foundChessboardCorners.push_back(pointBuf);
+      foundCorners.push_back(pointBuf);
     }
     if (DEBUG) {
       drawChessboardCorners(*iter, this->chessBoardDimensions, pointBuf,
                             chessBoardFound);
       imshow("Found Corners", *iter);
-      waitKey(0);
+      waitKey(27);
     }
   }
 }
@@ -75,8 +76,7 @@ void CameraCalibrator::calculateChessBoardCornersFromImages() {
  */
 
 void CameraCalibrator::getImagesFromCamera() {
-  Mat frame, drawToFrame, distanceCoefficients,
-      cameraMatrix = Mat::eye(3, 3, CV_64F);
+  Mat frame, drawToFrame, oefficients, cameraMatrix = Mat::eye(3, 3, CV_64F);
   vector<Mat> savedImages;
   vector<vector<Point2f>> markerCorners, rejectedCorners;
 
@@ -105,6 +105,81 @@ void CameraCalibrator::getImagesFromCamera() {
         imshow("Camera", frame);
 
       char c = waitKey(1000 / this->FPS);
+
+      switch (c) {
+      case ' ':
+        // savedImages
+        if (found) {
+          Mat temp;
+          frame.copyTo(temp);
+          this->images.push_back(temp);
+        }
+        break;
+      case 10:
+        cout << "returning to calibrate" << endl;
+        return;
+      case 27:
+        // exit
+        cout << "Exiting" << endl;
+        exit(0);
+        break;
+      }
     }
   }
+}
+
+/*
+ * Get Images From Camera
+ *
+ * Grab images from a camera and store for calibration
+ *
+ */
+void CameraCalibrator::calibrate() {
+  this->getImagesFromCamera();
+  cout << "Calibrating" << endl;
+  vector<vector<Point2f>> imageSpacePoints;
+  this->calculateChessBoardCornersFromImages(imageSpacePoints);
+  vector<vector<Point3f>> worldCornerPoints(1);
+  this->calculateChessBoardPosition(worldCornerPoints[0]);
+  worldCornerPoints.resize(imageSpacePoints.size(), worldCornerPoints[0]);
+
+  vector<Mat> rVecs, tVecs;
+  this->distanceCoefficients = Mat::zeros(8, 1, CV_64F);
+  // Performs the Calibration
+  calibrateCamera(worldCornerPoints, imageSpacePoints,
+                  this->chessBoardDimensions, this->cameraMatrix,
+                  this->distanceCoefficients, rVecs, tVecs);
+  if (this->saveCalibration())
+    cout << "File saved" << endl;
+  else
+    cout << "Unable to save file" << endl;
+}
+
+bool CameraCalibrator::saveCalibration() {
+  ofstream outstream(this->outFileName);
+  if (outstream) {
+    uint16_t rows = this->cameraMatrix.rows;
+    uint16_t columns = this->cameraMatrix.cols;
+
+    for (size_t r = 0; r < rows; r++) {
+      for (size_t c = 0; c < columns; c++) {
+        double value = this->cameraMatrix.at<double>(r, c);
+        outstream << value << endl;
+      }
+    }
+
+    rows = distanceCoefficients.rows;
+    columns = distanceCoefficients.cols;
+
+    for (size_t r = 0; r < rows; r++) {
+      for (size_t c = 0; c < columns; c++) {
+        double value = this->distanceCoefficients.at<double>(r, c);
+        outstream << value << endl;
+      }
+    }
+
+    outstream.close();
+    return true;
+  }
+  return false;
 }

@@ -21,7 +21,7 @@ public:
   bool callibrate();
   bool openCamera();
   bool isCameraOpen();
-  void getImagesFromCamera();
+  void calibrate();
 
 private:
   int cameraId;
@@ -29,15 +29,20 @@ private:
   bool flipVertical = false;
   float chessBoardSquareSize = 0.0235f; // Meters
   float arucoSquareSize = 0.0;          // Meters
+  string outFileName = "out.txt";
   VideoCapture inputVideo;
   Size chessBoardDimensions = Size(6, 9);
   vector<Point3f> chessBoardCorners;
   vector<Mat> images;
   vector<vector<Point2f>> foundChessboardCorners;
-
+  Mat cameraMatrix = Mat::eye(3, 3, CV_64F);
+  Mat distanceCoefficients;
   int chessBoardFlags = cv::CALIB_CB_ADAPTIVE_THRESH |
                         cv::CALIB_CB_NORMALIZE_IMAGE | cv::CALIB_CB_FAST_CHECK;
-  void calculateChessBoardPosition();
-  void calculateChessBoardCornersFromImages();
+  void calculateChessBoardPosition(vector<Point3f> &vec);
+  void
+  calculateChessBoardCornersFromImages(vector<vector<Point2f>> &foundCorners);
+  void getImagesFromCamera();
+  bool saveCalibration();
 };
 #endif
