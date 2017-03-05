@@ -1,3 +1,6 @@
 build/
 marker*.png
 *.o
+findChessBoard
+*.out
+*.gch
