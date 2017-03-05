@@ -179,30 +179,18 @@ void CameraCalibrator::calibrate() {
 }
 
 bool CameraCalibrator::saveCalibration() {
-  ofstream outstream(this->outFileName);
-  if (outstream) {
-    uint16_t rows = this->cameraMatrix.rows;
-    uint16_t columns = this->cameraMatrix.cols;
+  FileStorage fs(this->outFileName, FileStorage::WRITE);
+  if (!fs.isOpened())
+    return false;
+  time_t tm;
+  time(&tm);
+  struct tm *t2 = localtime(&tm);
+  char buf[1024];
+  strftime(buf, sizeof(buf), "%c", t2);
 
-    for (size_t r = 0; r < rows; r++) {
-      for (size_t c = 0; c < columns; c++) {
-        double value = this->cameraMatrix.at<double>(r, c);
-        outstream << value << endl;
-      }
-    }
-
-    rows = distanceCoefficients.rows;
-    columns = distanceCoefficients.cols;
-
-    for (size_t r = 0; r < rows; r++) {
-      for (size_t c = 0; c < columns; c++) {
-        double value = this->distanceCoefficients.at<double>(r, c);
-        outstream << value << endl;
-      }
-    }
-
-    outstream.close();
-    return true;
-  }
-  return false;
+  fs << "calibration_time" << buf;
+  fs << "camera_matrix" << this->cameraMatrix;
+  fs << "distortion_coefficients" << this->distanceCoefficients;
+  fs.release();
+  return true;
 }

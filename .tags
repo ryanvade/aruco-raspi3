@@ -409,7 +409,7 @@ main	src/FindArucoMarkers/detectMarker.cpp	/^int main(int argc, char const *argv
 main	src/FindArucoMarkers/generateMarkers.cpp	/^int main(int argc, char const *argv[]) {$/;"	f
 main	src/Util/findChessBoard.cpp	/^int main(int argc, char const *argv[]) {$/;"	f
 numImagesForCalibration	src/CameraCalibration/CameraCalibrator.h	/^  int numImagesForCalibration = 15;$/;"	m	class:CameraCalibrator
-outFileName	src/CameraCalibration/CameraCalibrator.h	/^  string outFileName = "out.txt";$/;"	m	class:CameraCalibrator
+outFileName	src/CameraCalibration/CameraCalibrator.h	/^  string outFileName =$/;"	m	class:CameraCalibrator
 qnxnto	build/CMakeFiles/3.7.2/CompilerIdC/CMakeCCompilerId.c	/^char const* qnxnto = "INFO" ":" "qnxnto[]";$/;"	v
 qnxnto	build/CMakeFiles/3.7.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const* qnxnto = "INFO" ":" "qnxnto[]";$/;"	v
 res	src/Util/getWaitKeyValue.py	/^res = cv2.waitKey(0)$/;"	v

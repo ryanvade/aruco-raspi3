@@ -30,7 +30,9 @@ private:
   float chessBoardSquareSize = 0.0235f; // Meters
   float arucoSquareSize = 0.0;          // Meters
   int numImagesForCalibration = 15;
-  string outFileName = "out.txt";
+  string outFileName =
+      "/home/ryan/build/kipr/aruco-raspi3/src/FindArucoMarkers/"
+      "calibration.txt";
   VideoCapture inputVideo;
   Size chessBoardDimensions = Size(6, 9);
   vector<Point3f> chessBoardCorners;
