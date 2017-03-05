@@ -5,7 +5,7 @@
 #include <opencv2/core.hpp>
 #include <opencv2/videoio.hpp>
 #include <string>
-#define DEBUG 1
+#define DEBUG 0
 typedef int MODE;
 
 using namespace std;
@@ -29,6 +29,7 @@ private:
   bool flipVertical = false;
   float chessBoardSquareSize = 0.0235f; // Meters
   float arucoSquareSize = 0.0;          // Meters
+  int numImagesForCalibration = 15;
   string outFileName = "out.txt";
   VideoCapture inputVideo;
   Size chessBoardDimensions = Size(6, 9);

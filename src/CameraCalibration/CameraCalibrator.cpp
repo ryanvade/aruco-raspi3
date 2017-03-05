@@ -4,6 +4,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <unistd.h>
 
 #include <opencv2/calib3d.hpp>
 #include <opencv2/core.hpp>
@@ -86,6 +87,10 @@ void CameraCalibrator::getImagesFromCamera() {
   if (DEBUG) {
     namedWindow("Camera", CV_WINDOW_AUTOSIZE);
   }
+  cout << "Found " << this->images.size() << " / "
+       << this->numImagesForCalibration
+       << " waiting 5 seconds for the first image" << endl;
+  usleep(5 * 1000000);
 
   while (true) {
     if (!this->inputVideo.read(frame))
@@ -97,6 +102,7 @@ void CameraCalibrator::getImagesFromCamera() {
                                   foundPoints, this->chessBoardFlags);
     frame.copyTo(drawToFrame);
     if (DEBUG) {
+      // When in DEBUG, show the captured image
       drawChessboardCorners(drawToFrame, this->chessBoardDimensions,
                             foundPoints, found);
       if (found)
@@ -116,6 +122,10 @@ void CameraCalibrator::getImagesFromCamera() {
         }
         break;
       case 10:
+        if (this->images.size() < this->numImagesForCalibration) {
+          cout << "Not enough images" << endl;
+          break;
+        }
         cout << "returning to calibrate" << endl;
         return;
       case 27:
@@ -123,6 +133,19 @@ void CameraCalibrator::getImagesFromCamera() {
         cout << "Exiting" << endl;
         exit(0);
         break;
+      }
+    } else {
+      // When not in DEBUG, Automate the Image Capture Process
+      if (this->images.size() >= this->numImagesForCalibration)
+        return;
+      if (found) {
+        Mat temp;
+        frame.copyTo(temp);
+        this->images.push_back(temp);
+        cout << "Found " << this->images.size() << " / "
+             << this->numImagesForCalibration
+             << " waiting 5 seconds for next image" << endl;
+        usleep(5 * 1000000);
       }
     }
   }

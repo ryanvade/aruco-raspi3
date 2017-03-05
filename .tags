@@ -408,6 +408,7 @@ main	src/CameraCalibration/calibrateCamera.cpp	/^int main(int argc, char const *
 main	src/FindArucoMarkers/detectMarker.cpp	/^int main(int argc, char const *argv[]) {$/;"	f
 main	src/FindArucoMarkers/generateMarkers.cpp	/^int main(int argc, char const *argv[]) {$/;"	f
 main	src/Util/findChessBoard.cpp	/^int main(int argc, char const *argv[]) {$/;"	f
+numImagesForCalibration	src/CameraCalibration/CameraCalibrator.h	/^  int numImagesForCalibration = 15;$/;"	m	class:CameraCalibrator
 outFileName	src/CameraCalibration/CameraCalibrator.h	/^  string outFileName = "out.txt";$/;"	m	class:CameraCalibrator
 qnxnto	build/CMakeFiles/3.7.2/CompilerIdC/CMakeCCompilerId.c	/^char const* qnxnto = "INFO" ":" "qnxnto[]";$/;"	v
 qnxnto	build/CMakeFiles/3.7.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const* qnxnto = "INFO" ":" "qnxnto[]";$/;"	v
