@@ -28,7 +28,7 @@ private:
   const int FPS = 20;
   bool flipVertical = false;
   float chessBoardSquareSize = 0.0235f; // Meters
-  float arucoSquareSize = 0.0;          // Meters
+  float arucoSquareSize = 0.025f;          // Meters
   int numImagesForCalibration = 15;
   string outFileName =
       "/home/ryan/build/kipr/aruco-raspi3/src/FindArucoMarkers/"

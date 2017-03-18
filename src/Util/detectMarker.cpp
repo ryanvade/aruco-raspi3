@@ -17,8 +17,7 @@ int main(int argc, char const *argv[]) {
   vector<vector<Point2f>> markerCorners, rejectedMarkers;
   aruco::DetectorParameters parameters;
   vector<Vec3d> rotationVectors, translationVectors;
-  FileStorage fs("/home/ryan/build/kipr/aruco-raspi3/src/FindArucoMarkers/"
-                 "calibration.txt",
+  FileStorage fs("calibration.txt",
                  FileStorage::READ);
 
   Ptr<aruco::Dictionary> dictionary = aruco::getPredefinedDictionary(

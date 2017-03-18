@@ -15,16 +15,19 @@ public:
   ArucoDetector();
   bool openCamera();
   bool isCameraOpen();
-  vector<int> arucoMarkerInView();
+  vector<double> getPose(int arucoId);
+  vector<int> arucoMarkersInView();
   bool arucoMarkerInView(int arucoId);
   vector<int> getArucoMarkerPose(int arucoId);
 
 private:
   int cameraId;
-  Mat getImage();
+  Mat getFrame();
   int dictionaryId;
   bool flipVertical;
   VideoCapture camera;
+  bool vectorContains(vector<int> vec, int val);
+  float arucoSquareSize = 0.025f;          // Meters
   string calibrationFile = "calibration.txt";
   Ptr<aruco::Dictionary> dictionary = aruco::getPredefinedDictionary(
       aruco::PREDEFINED_DICTIONARY_NAME(this->dictionaryId));
