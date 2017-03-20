@@ -8,3 +8,6 @@ calibrateCamera
 out.txt
 /cmake-build-debug/
 .idea/
+.latex/
+.latex.json
+*.synctex.gz

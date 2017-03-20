@@ -30,6 +30,10 @@ ARCHITECTURE_ID	build/CMakeFiles/3.7.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	420;
 ARCHITECTURE_ID	build/CMakeFiles/3.7.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	423;"	d	file:
 ARCHITECTURE_ID	build/CMakeFiles/3.7.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	426;"	d	file:
 ARCHITECTURE_ID	build/CMakeFiles/3.7.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	430;"	d	file:
+ARUCO_DETECTOR_H	src/FindArucoMarkers/ArucoDetector.h	2;"	d
+ArucoDetector	src/FindArucoMarkers/ArucoDetector.cpp	/^ArucoDetector::ArucoDetector()$/;"	f	class:ArucoDetector
+ArucoDetector	src/FindArucoMarkers/ArucoDetector.cpp	/^ArucoDetector::ArucoDetector(int cameraId, bool flipVertical)$/;"	f	class:ArucoDetector
+ArucoDetector	src/FindArucoMarkers/ArucoDetector.h	/^class ArucoDetector {$/;"	c
 CALIBRATED	src/CameraCalibration/CameraCalibrator.h	/^enum MODES { CALIBRATING = 0, DETECTING = 1, CAPTURING = 2, CALIBRATED = 3 };$/;"	e	enum:MODES
 CALIBRATING	src/CameraCalibration/CameraCalibrator.h	/^enum MODES { CALIBRATING = 0, DETECTING = 1, CAPTURING = 2, CALIBRATED = 3 };$/;"	e	enum:MODES
 CAMERA_CALIBFRATOR_H	src/CameraCalibration/CameraCalibrator.h	2;"	d
@@ -263,6 +267,7 @@ C_DIALECT	build/CMakeFiles/3.7.2/CompilerIdC/CMakeCCompilerId.c	518;"	d	file:
 C_DIALECT	build/CMakeFiles/3.7.2/CompilerIdC/CMakeCCompilerId.c	521;"	d	file:
 C_DIALECT	build/CMakeFiles/3.7.2/CompilerIdC/CMakeCCompilerId.c	523;"	d	file:
 C_DIALECT	build/CMakeFiles/3.7.2/CompilerIdC/CMakeCCompilerId.c	525;"	d	file:
+Camera Callibration and Marker Detection	midterm-report.tex	/^  \\end{titlepage}$/;"	s
 CameraCalibrator	src/CameraCalibration/CameraCalibrator.cpp	/^CameraCalibrator::CameraCalibrator() {$/;"	f	class:CameraCalibrator
 CameraCalibrator	src/CameraCalibration/CameraCalibrator.cpp	/^CameraCalibrator::CameraCalibrator(int cameraId, bool flipVertical) {$/;"	f	class:CameraCalibrator
 CameraCalibrator	src/CameraCalibration/CameraCalibrator.h	/^class CameraCalibrator {$/;"	c
@@ -270,6 +275,10 @@ DEBUG	src/CameraCalibration/CameraCalibrator.h	8;"	d
 DEC	build/CMakeFiles/3.7.2/CompilerIdC/CMakeCCompilerId.c	447;"	d	file:
 DEC	build/CMakeFiles/3.7.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	434;"	d	file:
 DETECTING	src/CameraCalibration/CameraCalibrator.h	/^enum MODES { CALIBRATING = 0, DETECTING = 1, CAPTURING = 2, CALIBRATED = 3 };$/;"	e	enum:MODES
+DICTIONARY_GENERATOR_H	src/GenerateDictionary/DictionaryGenerator.h	2;"	d
+DictionaryGenerator	src/GenerateDictionary/DictionaryGenerator.cpp	/^DictionaryGenerator::DictionaryGenerator() {$/;"	f	class:DictionaryGenerator
+DictionaryGenerator	src/GenerateDictionary/DictionaryGenerator.cpp	/^DictionaryGenerator::DictionaryGenerator(int numberOfMarkers,$/;"	f	class:DictionaryGenerator
+DictionaryGenerator	src/GenerateDictionary/DictionaryGenerator.h	/^class DictionaryGenerator {$/;"	c
 EQUALS	build/Makefile	/^EQUALS = =$/;"	m
 FPS	src/CameraCalibration/CameraCalibrator.h	/^  const int FPS = 20;$/;"	m	class:CameraCalibrator
 HEX	build/CMakeFiles/3.7.2/CompilerIdC/CMakeCCompilerId.c	458;"	d	file:
@@ -277,6 +286,7 @@ HEX	build/CMakeFiles/3.7.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	445;"	d	file:
 ID_VOID_MAIN	build/CMakeFiles/3.7.2/CompilerIdC/CMakeCCompilerId.c	6;"	d	file:
 MODE	src/CameraCalibration/CameraCalibrator.h	/^typedef int MODE;$/;"	t
 MODES	src/CameraCalibration/CameraCalibrator.h	/^enum MODES { CALIBRATING = 0, DETECTING = 1, CAPTURING = 2, CALIBRATED = 3 };$/;"	g
+Marker Dictionary Generation	midterm-report.tex	/^  class with support for Aruco Diamond markers.$/;"	s
 PLATFORM_ID	build/CMakeFiles/3.7.2/CompilerIdC/CMakeCCompilerId.c	301;"	d	file:
 PLATFORM_ID	build/CMakeFiles/3.7.2/CompilerIdC/CMakeCCompilerId.c	304;"	d	file:
 PLATFORM_ID	build/CMakeFiles/3.7.2/CompilerIdC/CMakeCCompilerId.c	307;"	d	file:
@@ -364,23 +374,39 @@ STRINGIFY	build/CMakeFiles/3.7.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	284;"	d	fi
 STRINGIFY_HELPER	build/CMakeFiles/3.7.2/CompilerIdC/CMakeCCompilerId.c	296;"	d	file:
 STRINGIFY_HELPER	build/CMakeFiles/3.7.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	283;"	d	file:
 SUFFIXES	build/Makefile	/^SUFFIXES =$/;"	m
-arucoSquareSize	src/CameraCalibration/CameraCalibrator.h	/^  float arucoSquareSize = 0.0;          \/\/ Meters$/;"	m	class:CameraCalibrator
+arucoMarkerInView	src/FindArucoMarkers/ArucoDetector.cpp	/^bool ArucoDetector::arucoMarkerInView(int arucoId)$/;"	f	class:ArucoDetector
+arucoMarkersInView	src/FindArucoMarkers/ArucoDetector.cpp	/^vector<int> ArucoDetector::arucoMarkersInView()$/;"	f	class:ArucoDetector
+arucoSquareSize	src/CameraCalibration/CameraCalibrator.h	/^  float arucoSquareSize = 0.025f;          \/\/ Meters$/;"	m	class:CameraCalibrator
+arucoSquareSize	src/FindArucoMarkers/ArucoDetector.h	/^  float arucoSquareSize = 0.025f;          \/\/ Meters$/;"	m	class:ArucoDetector
 calculateChessBoardCornersFromImages	src/CameraCalibration/CameraCalibrator.cpp	/^void CameraCalibrator::calculateChessBoardCornersFromImages($/;"	f	class:CameraCalibrator
 calculateChessBoardPosition	src/CameraCalibration/CameraCalibrator.cpp	/^void CameraCalibrator::calculateChessBoardPosition(vector<Point3f> &corners) {$/;"	f	class:CameraCalibrator
 calibrate	src/CameraCalibration/CameraCalibrator.cpp	/^void CameraCalibrator::calibrate() {$/;"	f	class:CameraCalibrator
+calibrationFile	src/FindArucoMarkers/ArucoDetector.h	/^  string calibrationFile = "calibration.txt";$/;"	m	class:ArucoDetector
+camera	src/FindArucoMarkers/ArucoDetector.h	/^  VideoCapture camera;$/;"	m	class:ArucoDetector
 cameraId	src/CameraCalibration/CameraCalibrator.h	/^  int cameraId;$/;"	m	class:CameraCalibrator
+cameraId	src/FindArucoMarkers/ArucoDetector.h	/^  int cameraId;$/;"	m	class:ArucoDetector
 cameraMatrix	src/CameraCalibration/CameraCalibrator.h	/^  Mat cameraMatrix = Mat::eye(3, 3, CV_64F);$/;"	m	class:CameraCalibrator
 chessBoardCorners	src/CameraCalibration/CameraCalibrator.h	/^  vector<Point3f> chessBoardCorners;$/;"	m	class:CameraCalibrator
 chessBoardDimensions	src/CameraCalibration/CameraCalibrator.h	/^  Size chessBoardDimensions = Size(6, 9);$/;"	m	class:CameraCalibrator
 chessBoardFlags	src/CameraCalibration/CameraCalibrator.h	/^  int chessBoardFlags = cv::CALIB_CB_ADAPTIVE_THRESH |$/;"	m	class:CameraCalibrator
 chessBoardSquareSize	src/CameraCalibration/CameraCalibrator.h	/^  float chessBoardSquareSize = 0.0235f; \/\/ Meters$/;"	m	class:CameraCalibrator
+compareDictionaries	src/GenerateDictionary/generateDictionary.cpp	/^bool compareDictionaries(aruco::Dictionary *dict1, aruco::Dictionary *dict2) {$/;"	f
 const	build/CMakeFiles/3.7.2/CompilerIdC/CMakeCCompilerId.c	10;"	d	file:
+detectorParams	src/FindArucoMarkers/ArucoDetector.h	/^      Ptr<aruco::DetectorParameters> detectorParams =$/;"	m	class:ArucoDetector
+dictionary	src/FindArucoMarkers/ArucoDetector.h	/^  Ptr<aruco::Dictionary> dictionary = aruco::getPredefinedDictionary($/;"	m	class:ArucoDetector
+dictionaryId	src/FindArucoMarkers/ArucoDetector.h	/^  int dictionaryId;$/;"	m	class:ArucoDetector
+dimensionOfMarkers	src/GenerateDictionary/DictionaryGenerator.h	/^  int dimensionOfMarkers;$/;"	m	class:DictionaryGenerator
 distanceCoefficients	src/CameraCalibration/CameraCalibrator.h	/^  Mat distanceCoefficients;$/;"	m	class:CameraCalibrator
 features	build/CMakeFiles/feature_tests.c	/^  const char features[] = {"\\n"$/;"	v
 features	build/CMakeFiles/feature_tests.cxx	/^  const char features[] = {"\\n"$/;"	v
 flipVertical	src/CameraCalibration/CameraCalibrator.h	/^  bool flipVertical = false;$/;"	m	class:CameraCalibrator
+flipVertical	src/FindArucoMarkers/ArucoDetector.h	/^  bool flipVertical;$/;"	m	class:ArucoDetector
 foundChessboardCorners	src/CameraCalibration/CameraCalibrator.h	/^  vector<vector<Point2f>> foundChessboardCorners;$/;"	m	class:CameraCalibrator
+generateNewDictionary	src/GenerateDictionary/DictionaryGenerator.cpp	/^aruco::Dictionary DictionaryGenerator::generateNewDictionary() {$/;"	f	class:DictionaryGenerator
+getDictionaryFromFile	src/GenerateDictionary/DictionaryGenerator.cpp	/^aruco::Dictionary *DictionaryGenerator::getDictionaryFromFile(string filename) {$/;"	f	class:DictionaryGenerator
+getFrame	src/FindArucoMarkers/ArucoDetector.cpp	/^Mat ArucoDetector::getFrame()$/;"	f	class:ArucoDetector
 getImagesFromCamera	src/CameraCalibration/CameraCalibrator.cpp	/^void CameraCalibrator::getImagesFromCamera() {$/;"	f	class:CameraCalibrator
+getPose	src/FindArucoMarkers/ArucoDetector.cpp	/^vector<double> ArucoDetector::getPose(int arucoId)$/;"	f	class:ArucoDetector
 images	src/CameraCalibration/CameraCalibrator.h	/^  vector<Mat> images;$/;"	m	class:CameraCalibrator
 info_arch	build/CMakeFiles/3.7.2/CompilerIdC/CMakeCCompilerId.c	/^char const* info_arch = "INFO" ":" "arch[" ARCHITECTURE_ID "]";$/;"	v
 info_arch	build/CMakeFiles/3.7.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const* info_arch = "INFO" ":" "arch[" ARCHITECTURE_ID "]";$/;"	v
@@ -399,19 +425,37 @@ info_simulate_version	build/CMakeFiles/3.7.2/CompilerIdCXX/CMakeCXXCompilerId.cp
 info_version	build/CMakeFiles/3.7.2/CompilerIdC/CMakeCCompilerId.c	/^char const info_version[] = {$/;"	v
 info_version	build/CMakeFiles/3.7.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const info_version[] = {$/;"	v
 inputVideo	src/CameraCalibration/CameraCalibrator.h	/^  VideoCapture inputVideo;$/;"	m	class:CameraCalibrator
+isCameraOpen	src/FindArucoMarkers/ArucoDetector.cpp	/^bool ArucoDetector::isCameraOpen()$/;"	f	class:ArucoDetector
+latexmkOptions	.latex.json	/^  "latexmkOptions": "-bibtex -pdf -shell-escape",$/;"	f
 main	build/CMakeFiles/3.7.2/CompilerIdC/CMakeCCompilerId.c	/^int main(argc, argv) int argc; char *argv[];$/;"	f
 main	build/CMakeFiles/3.7.2/CompilerIdC/CMakeCCompilerId.c	/^void main() {}$/;"	f
 main	build/CMakeFiles/3.7.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^int main(int argc, char* argv[])$/;"	f
 main	build/CMakeFiles/feature_tests.c	/^int main(int argc, char** argv) { (void)argv; return features[argc]; }$/;"	f
 main	build/CMakeFiles/feature_tests.cxx	/^int main(int argc, char** argv) { (void)argv; return features[argc]; }$/;"	f
 main	src/CameraCalibration/calibrateCamera.cpp	/^int main(int argc, char const *argv[]) {$/;"	f
-main	src/FindArucoMarkers/detectMarker.cpp	/^int main(int argc, char const *argv[]) {$/;"	f
-main	src/FindArucoMarkers/generateMarkers.cpp	/^int main(int argc, char const *argv[]) {$/;"	f
+main	src/FindArucoMarkers/MarkerDetector.cpp	/^int main(int argc, char** argv)$/;"	f
+main	src/GenerateDictionary/generateDictionary.cpp	/^int main(int argc, char const *argv[]) {$/;"	f
+main	src/Util/detectMarker.cpp	/^int main(int argc, char const *argv[]) {$/;"	f
 main	src/Util/findChessBoard.cpp	/^int main(int argc, char const *argv[]) {$/;"	f
+main	src/Util/generateMarkers.cpp	/^int main(int argc, char const *argv[]) {$/;"	f
 numImagesForCalibration	src/CameraCalibration/CameraCalibrator.h	/^  int numImagesForCalibration = 15;$/;"	m	class:CameraCalibrator
+numberOfMarkers	src/GenerateDictionary/DictionaryGenerator.h	/^  int numberOfMarkers;$/;"	m	class:DictionaryGenerator
+openCamera	src/FindArucoMarkers/ArucoDetector.cpp	/^bool ArucoDetector::openCamera()$/;"	f	class:ArucoDetector
+openOutput	.latex.json	/^  "openOutput": "true",$/;"	f
+outFile	src/GenerateDictionary/DictionaryGenerator.h	/^  string outFile = "kipr_dictionary.yml";$/;"	m	class:DictionaryGenerator
 outFileName	src/CameraCalibration/CameraCalibrator.h	/^  string outFileName =$/;"	m	class:CameraCalibrator
+output	.latex.json	/^  "output": ".latex",$/;"	f
+postAction	.latex.json	/^  "postAction": "link",$/;"	f
+postPath	.latex.json	/^  "postPath": ""$/;"	f
+program	.latex.json	/^  "program": "pdflatex",$/;"	f
+projectPath	.latex.json	/^  "projectPath": "\/home\/ryan\/build\/kipr\/aruco-raspi3",$/;"	f
 qnxnto	build/CMakeFiles/3.7.2/CompilerIdC/CMakeCCompilerId.c	/^char const* qnxnto = "INFO" ":" "qnxnto[]";$/;"	v
 qnxnto	build/CMakeFiles/3.7.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const* qnxnto = "INFO" ":" "qnxnto[]";$/;"	v
 res	src/Util/getWaitKeyValue.py	/^res = cv2.waitKey(0)$/;"	v
+root	.latex.json	/^  "root": "midterm-report.tex",$/;"	f
 saveCalibration	src/CameraCalibration/CameraCalibrator.cpp	/^bool CameraCalibrator::saveCalibration() {$/;"	f	class:CameraCalibrator
+saveDictionary	src/GenerateDictionary/DictionaryGenerator.cpp	/^bool DictionaryGenerator::saveDictionary(aruco::Dictionary *dictionary) {$/;"	f	class:DictionaryGenerator
+title	.latex.json	/^  "title": "LaTeX-Plus Project",$/;"	f
+vectorContains	src/FindArucoMarkers/ArucoDetector.cpp	/^bool ArucoDetector::vectorContains(vector<int> vec, int val)$/;"	f	class:ArucoDetector
 volatile	build/CMakeFiles/3.7.2/CompilerIdC/CMakeCCompilerId.c	11;"	d	file:
+~DictionaryGenerator	src/GenerateDictionary/DictionaryGenerator.cpp	/^DictionaryGenerator::~DictionaryGenerator() {}$/;"	f	class:DictionaryGenerator

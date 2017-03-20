@@ -1,0 +1,160 @@
+%midterm-report.tex - Report for CS 425
+\documentclass[twoside]{report}
+\usepackage{listings}
+\lstset{frame=tb,language=C++,numbers=none}
+\begin{document}
+  \begin{titlepage}
+    \title{Midsemester Report on Aruco Markers using the Rasperry Pi 3 and Opencv 3.2}
+    \date{March 19, 2017}
+    \author{Ryan Owens}
+    \maketitle
+  \end{titlepage}
+  \section{Camera Callibration and Marker Detection}
+    Thus far I have spent most of my time working with camera callibration. My goal
+    for camera callibration is to provide an easy-to-use class that will grab
+    frames from a camera and calculate the distortions.  The current version of
+    my camera callibration class requires 15 frames to be captured using a usb
+    camera. During the callibration, my class will ask the user for the 15 frames.
+    Example code for calling the calibration is as follows:
+    \begin{lstlisting}
+#include "CameraCalibrator.h"
+
+int main(int argc, char const *argv[]) {
+  // Instantiate a new callibrator providing a camera id of 1
+  // and setting vertical flip of captured images to true
+  CameraCalibrator *calibrator = new CameraCalibrator(1, true);
+
+  // Run the callibration
+  calibrator->calibrate();
+  return 0;
+}
+    \end{lstlisting}
+    The calibrate function runs through the entire camera callibration and saves
+    both translation and rotation distortions into a file.
+
+      With camera distortion values obtained, aruco marker detection and pose
+    estimation can be performed. An ArucoDetector class has been implemented which
+    provides an easy means for finding markers.  Initial goals of the class are
+    to allows developers the ability to check if a particular marker is in view,
+    to get an array of all markers currently in view and to get the estimated
+    pose of a marker relative to the camera's position. As of now the ArucoDetector
+    class can perform all three functions.  An example of how to use the class is
+    as follows:
+    \begin{lstlisting}
+#include <iostream>
+#include "ArucoDetector.h"
+
+using namespace std;
+
+int main(int argc, char** argv)
+{
+// Instantiate a new ArucoDetector providing a camera
+// id of 1 and turning Vertical Image flip to false
+ArucoDetector* detector = new ArucoDetector(1, false);
+// opening the specified camera
+detector->openCamera();
+cout << "Running through marker in view" << endl;
+for(int i = 0; i < 10; i++)
+{
+  // Checking if the marker with id i is in view
+	if(detector->arucoMarkerInView(i))
+	cout << "Marker " << i << " is in view" << endl;
+	else
+	cout << "Marker " << i << " is not in view" << endl;
+}
+cout << endl << "Running through markers in view" << endl;
+// Getting an array of markers currently in view
+vector<int> markers = detector->arucoMarkersInView();
+for(auto itr = markers.begin(); itr != markers.end(); ++itr)
+{
+	cout << "Marker " << *itr <<  " is in view." << endl;
+  // Getting the pose of a marker by its id
+	vector<double> rottransvec = detector->getPose(*itr);
+	cout << endl << "Running get pose for id " << *itr << endl;
+	for(auto itr = rottransvec.begin(); itr != rottransvec.end(); ++itr)
+	{
+		cout << *itr << endl;
+	}
+}
+// Getting the pose of a marker by its id
+// during testing, this marker was not in view
+// and the expected pose was x=0, y=0, z=0,
+// rotx=0, roty=0, rotz=0
+vector<double> rottransvec = detector->getPose(5);
+cout << endl << "Running get pose for id " << 5 << endl;
+for(auto itr = rottransvec.begin(); itr != rottransvec.end(); ++itr)
+{
+	cout << *itr << endl;
+}
+return 0;
+}
+  \end{lstlisting}
+  Currently, arrays are substituted with c++ standard vectors. I have been
+  considering an interface for the pose estimation. This interface would be
+  its own class that provides the relevent data as needed. However, without
+  knowing exactly how KIPR plans to use the pose data it has been difficult
+  to plan a proper interface class. I'm also planning to extend the ArucoDetector
+  class with support for Aruco Diamond markers.
+  \section{Marker Dictionary Generation}
+  Dictionary generation is very simple using the aruco dictionary generator function.
+  The biggest obstacle with the dictionary generation is saving the dictionary for
+  later use. OpenCV's FileStorage class makes saving and retrieving the dictionary
+  easy.  Example code for generating a custom dictionary is as follows:
+  \begin{lstlisting}
+#include "DictionaryGenerator.h"
+#include <iostream>
+
+using namespace std;
+
+bool compareDictionaries(aruco::Dictionary *dict1, aruco::Dictionary *dict2) {
+  return (dict1->markerSize == dict2->markerSize) &&
+         (dict1->maxCorrectionBits == dict2->maxCorrectionBits);
+}
+
+int main(int argc, char const *argv[]) {
+  // Instantiate a Dictionary Generator with
+  // The number of markers in the dictionary is 16
+  // The dimensions of the markers is 20
+  DictionaryGenerator *dictionaryGenerator = new DictionaryGenerator(16, 20);
+  // Generate the new Dictionary
+  auto dictionary = dictionaryGenerator->generateNewDictionary();
+  // Write the Dictionary to file
+  dictionaryGenerator->saveDictionary(&dictionary);
+  // Read the Dictionary from file
+  auto retrievedDictionary =
+      dictionaryGenerator->getDictionaryFromFile("kipr_dictionary.yml");
+  if (compareDictionaries(&dictionary, retrievedDictionary))
+    cout << "Dictionaries are the same" << endl;
+  else
+    cout << "Dictionaries are not the same" << endl;
+  return 0;
+  }
+  \end{lstlisting}
+  \section{GPU Acceleration Possibilities}
+  At the beginning of the semester I beleived that GPU acceleration libraries
+  were available for the Raspberry Pi 3.  As it turns out GPU acceleration on the
+  Broadcom VideoCore IV, the GPU in the Pi 3, has not fully been implemented as
+  documentation for the GPU was released in 2014. Since the release it seems that
+  GPU acceleration has not been attempted other than the usual DOOM port.
+
+  Without some form of GPU acceleration library, any GPU work on the Raspberry Pi
+  3 will not be feasible. I have my doubts as to whether or not GPU acceleration
+  on the Pi 3 is worth putting any time or effort into.  The VideoCore IV has only
+  12 QPU cores and an L2 cache of 128Kb shared accros 3 QPU slices. My biggest
+  concern with GPU acceleration on the Pi 3 is sharing memory between the GPU and
+  CPU since the GPU does not have dedicated memory. In order to perform any worth
+  while calculations on the GPU it should be given at least 256Mb of memory.  This
+  reduces the memory available to the CPU by a fourth.
+
+  Shared memory between the CPU and GPU does, however, reduce the latency between
+  copying data to and from the GPU as it does not have to be obtained from GPU
+  memory. Considerations must also be made for the design of the GPU as a low
+  power SIMD based processor; it is just not that powerful.
+  \section{Plan for the rest of the semester}
+  I am hoping to spend the rest of the semester working on libwallaby integration
+  as well as further research on possible GPU acceleration for the Raspberry Pi 3.
+  In the next few weeks I will begin benchmarking the Pi 3 GPU and compare different
+  memory configurations.  Then, using the benchmark results, I will document my
+  theory on GPU acceleration on the Pi 3 platform.  Meanwhile I am also planning
+  to continue my support of Aruco libwallaby integration. 
+\end{document}
