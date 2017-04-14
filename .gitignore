@@ -1,0 +1,13 @@
+build/
+marker*.png
+*.o
+findChessBoard
+*.out
+*.gch
+calibrateCamera
+out.txt
+/cmake-build-debug/
+.idea/
+.latex/
+.latex.json
+*.synctex.gz
